@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+import json
+
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from .models import Task
 
@@ -23,17 +26,22 @@ def index(request):
 
     return render(request, 'index.html', {'tasks': tasks})
 
+
+@csrf_exempt
 def add_task(request):
     if request.method == 'POST':
-        title = request.POST.get('title', '')
-        if title:
-            task = Task.objects.create(title=title)
-            return JsonResponse({'id': task.id, 'title': task.title, 'completed': task.completed})
-        else:
-            return JsonResponse({'error': 'Title cannot be empty.'}, status=400)
+        try:
+            data = json.loads(request.body)
+            title = data['title']
+            if title:
+                task = Task.objects.create(title=title)
+                return JsonResponse({'id': task.id, 'title': task.title, 'completed': task.completed})
+            else:
+                return JsonResponse({'error': 'Title cannot be empty.'}, status=400)
+        except:
+            return JsonResponse({'error': 'Invalid data.'}, status=400)
     else:
         return JsonResponse({'error': 'Invalid method.'}, status=405)
-
 
 
 def complete_task(request, task_id):

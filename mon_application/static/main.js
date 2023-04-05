@@ -7,21 +7,30 @@ todoForm.addEventListener('submit', async (event) => {
 
     const todoText = todoInput.value.trim();
 
+    // if (todoText) {
+    //     try {
+    //         const response = await fetch(`/api/tasks/`, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({ title: todoText })
+    //         });
+    //
+    //         if (!response.ok) {
+    //             throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    //         }
+    //
+    //         const data = await response.json();
+    //         const newTodo = createTodoElement(data.title);
+    //         todoList.appendChild(newTodo);
+    //         todoInput.value = '';
+    //     } catch (error) {
+    //         console.error('Error creating todo element:', error);
+    //     }
+    // }
     if (todoText) {
         try {
-            const response = await fetch('/api/tasks/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title: todoText })
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status} - ${response.statusText}`);
-            }
-
-            const data = await response.json();
-            const newTodo = createTodoElement(data.title);
-            todoList.appendChild(newTodo);
+            const newTodo = createTodoElement(todoText);
+            document.getElementById('todoList').appendChild(newTodo);
             todoInput.value = '';
         } catch (error) {
             console.error('Error creating todo element:', error);
