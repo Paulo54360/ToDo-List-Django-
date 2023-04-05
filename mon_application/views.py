@@ -11,10 +11,11 @@ def index(request):
 def add_task(request):
     if request.method == 'POST':
         title = request.POST['title']
-        new_task = Task(title=title)
-        new_task.save()
+        task = Task.objects.create(title=title)
+        task.save()
         return redirect('index')
-    return render(request, 'add_task.html')
+    else:
+        return render(request, 'add_task.html')
 
 
 def complete_task(request, task_id):

@@ -18,5 +18,10 @@
 </div>
 
 <script src="main.js"></script>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="title">
+    <button type="submit">Ajouter</button>
+</form>
 </body>
 </html>
