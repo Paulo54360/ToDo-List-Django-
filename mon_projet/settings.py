@@ -124,5 +124,7 @@ USE_TZ = True
 
 # ajoute  dans STATIC_URL qu'il soit égale à mon dossier static
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'mon_application', 'static')
+]
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]

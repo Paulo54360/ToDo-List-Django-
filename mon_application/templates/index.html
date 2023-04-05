@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
-    <script src="{% static 'main.js' %}" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
@@ -14,14 +12,13 @@
     <form id="todoForm" class="mb-4">
         <input id="todoInput" type="text" placeholder="Add a new task" class="border rounded w-full p-2">
     </form>
-    <ul id="todoList" class="list-disc pl-6"></ul>
+    <ul id="todoList" class="list-disc pl-6">
+        {% for task in tasks %}
+        <li {% if task.completed %}class="line-through text-gray-500"{% endif %}>{{ task.title }}</li>
+        {% endfor %}
+    </ul>
 </div>
-
-<script src="main.js"></script>
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name="title">
-    <button type="submit">Ajouter</button>
-</form>
+    {% load static %}
+    <script src="{% static 'main.js' %}"></script>
 </body>
 </html>
